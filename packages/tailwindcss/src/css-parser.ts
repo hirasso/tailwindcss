@@ -11,6 +11,7 @@ import {
 } from './ast'
 import { createLineTable } from './source-maps/line-table'
 import type { Source, SourceLocation } from './source-maps/source'
+import { withAlphaMarker } from './utilities.ts'
 
 const BACKSLASH = 0x5c
 const SLASH = 0x2f
@@ -148,9 +149,13 @@ export function parse(input: string, opts?: ParseOptions) {
 
       let commentString = input.slice(start, i + 1)
 
+      // Preserve /* tw:color-mix */
+      if (withAlphaMarker.startsWith(commentString)) {
+        buffer += commentString
+      }
       // Collect all license comments so that we can hoist them to the top of
       // the AST.
-      if (commentString.charCodeAt(2) === EXCLAMATION_MARK) {
+      else if (commentString.charCodeAt(2) === EXCLAMATION_MARK) {
         let node = comment(commentString.slice(2, -2))
         licenseComments.push(node)
 

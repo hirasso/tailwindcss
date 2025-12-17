@@ -284,7 +284,8 @@ export function optimizeAst(
       if (node.value.includes(withAlphaMarker)) {
         // Always normalize the internal marker back to standard `color-mix(...)`
         // so that invalid syntax never reaches the final CSS.
-        node.value = node.value.replaceAll(withAlphaMarker, 'color-mix(')
+        node.value = node.value.replaceAll(withAlphaMarker, '')
+
 
         // Only register for ColorMix polyfilling when that polyfill is enabled
         // and we’re outside explicit supports/keyframes contexts.
@@ -582,6 +583,8 @@ export function optimizeAst(
                 varNode = null
               }
             } while (varNode)
+
+            console.dir({inlinedColor}, {depth: null})
 
             return WalkAction.Replace({ kind: 'word', value: inlinedColor } as const)
           })

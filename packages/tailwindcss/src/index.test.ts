@@ -5364,7 +5364,11 @@ describe('`color-mix(…)` polyfill', () => {
           }
           @tailwind utilities;
           .mixed {
-            color: tw-color-mix(in lch, var(--color-red-500) 50%, var(--color-orange-500));
+            color: color-mix(/* tw:color-mix */
+              in lch,
+              var(--color-red-500) 50%,
+              var(--color-orange-500)
+            );
           }
         `,
         [],
@@ -5396,9 +5400,9 @@ describe('`color-mix(…)` polyfill', () => {
           }
           @tailwind utilities;
           .stacked {
-            color: tw-color-mix(
+            color: color-mix(/* tw:color-mix */
               in lch,
-              tw-color-mix(in lch, var(--color-red-500) 50%, transparent) 50%,
+              color-mix(/* tw:color-mix */ in lch, var(--color-red-500) 50%, transparent) 50%,
               transparent
             );
           }
@@ -5434,8 +5438,8 @@ describe('`color-mix(…)` polyfill', () => {
           .gradient {
             background: linear-gradient(
               90deg,
-              tw-color-mix(in oklab, var(--color-red-500) 50%, transparent) 0%,
-              tw-color-mix(in oklab, var(--color-orange-500) 50%, transparent) 0%,
+              color-mix(/* tw:color-mix */ in oklab, var(--color-red-500) 50%, transparent) 0%,
+              color-mix(/* tw:color-mix */ in oklab, var(--color-orange-500) 50%, transparent) 0%,
               100%
             );
           }
@@ -5470,7 +5474,7 @@ describe('`color-mix(…)` polyfill', () => {
           }
           @tailwind utilities;
           .text-red-500\/50 {
-            color: tw-color-mix(in oklab,var(--color-red-500)50%,transparent);
+            color: color-mix(/* tw:color-mix */ in oklab,var(--color-red-500)50%,transparent);
           }
         `,
         [],
@@ -5595,9 +5599,9 @@ describe('`color-mix(…)` polyfill', () => {
         css`
           @tailwind utilities;
           .stacked {
-            color: tw-color-mix(
+            color: color-mix(/* tw:color-mix */
               in oklab,
-              tw-color-mix(in oklab, var(--my-color) var(--my-inner-opacity), transparent)
+                color-mix(/* tw:color-mix */ in oklab, var(--my-color) var(--my-inner-opacity), transparent)
                 var(--my-outer-opacity),
               transparent
             );
@@ -5673,7 +5677,8 @@ describe('`color-mix(…)` polyfill', () => {
           @layer theme {
             @theme {
               --color-red-500: red;
-              --shadow-xl: 0 6px 18px 4px tw-color-mix(in oklab, var(--color-red-500) 25%, transparent);
+              --shadow-xl: 0 6px 18px 4px
+                color-mix(/* tw:color-mix */ in oklab, var(--color-red-500) 25%, transparent);
               --opacity-disabled: 50%;
             }
           }
